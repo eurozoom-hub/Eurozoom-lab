@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SME Growth Lab — Join Free</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0a0a0a; --panel: #171719; --panel2: #1e1e21;
+  --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
+  --text: #f0ece3; --text2: #8a8680; --text3: #4a4845;
+  --accent: #d4472a; --accent2: #e8674e;
+  --accent-dim: rgba(212,71,42,0.10); --accent-border: rgba(212,71,42,0.28);
+  --gold: #c9a84c; --gold-dim: rgba(201,168,76,0.08);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--black); color: var(--text); font-family: 'Outfit', sans-serif; font-weight: 300; line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+body::before { content:''; position:fixed; inset:0; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E"); pointer-events:none; z-index:9999; }
+
+/* LANG */
+.lang-bar { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:flex-end; padding:14px 24px; background:linear-gradient(to bottom,rgba(10,10,10,0.9),transparent); }
+.lang-toggle { display:flex; border:1px solid var(--border2); overflow:hidden; }
+.lang-btn { background:none; border:none; border-right:1px solid var(--border2); padding:6px 14px; font-family:'Outfit',sans-serif; font-size:11px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--text2); cursor:pointer; transition:all 0.2s; }
+.lang-btn:last-child { border-right:none; }
+.lang-btn.active { background:var(--accent); color:#fff; }
+.lang-btn:hover:not(.active) { background:var(--panel); color:var(--text); }
+
+/* LANG SWITCHING */
+.pt-el, .es-el { display:none; }
+body.pt-mode .en-el { display:none; }
+body.pt-mode .pt-el { display:block; }
+body.es-mode .en-el { display:none; }
+body.es-mode .es-el { display:block; }
+span.pt-el, span.es-el { display:none; }
+body.pt-mode span.en-el { display:none; }
+body.pt-mode span.pt-el { display:inline; }
+body.es-mode span.en-el { display:none; }
+body.es-mode span.es-el { display:inline; }
+
+/* HERO */
+.hero { min-height: 100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:100px 24px 72px; text-align:center; position:relative; overflow:hidden; }
+.hero-glow { position:absolute; width:700px; height:700px; border-radius:50%; background:radial-gradient(circle, rgba(212,71,42,0.07) 0%, transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+.hero-grid { position:absolute; inset:0; background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px); background-size:52px 52px; opacity:0.3; mask-image:radial-gradient(ellipse 80% 80% at center,black 30%,transparent 100%); }
+
+.hero-badge { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--accent-border); padding:6px 16px; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:24px; animation:fadeUp 0.5s ease 0.1s both; }
+.badge-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); animation:pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+.hero-title { font-family:'Playfair Display',serif; font-size:clamp(44px,8vw,80px); font-weight:900; line-height:0.92; letter-spacing:-0.03em; margin-bottom:24px; animation:fadeUp 0.6s ease 0.2s both; }
+.hero-title em { font-style:italic; color:var(--accent); }
+
+.hero-sub { font-size:clamp(15px,2.5vw,18px); color:var(--text2); max-width:500px; line-height:1.65; margin-bottom:40px; animation:fadeUp 0.6s ease 0.3s both; }
+
+/* WHAT YOU GET PILLS */
+.pills { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:48px; animation:fadeUp 0.6s ease 0.35s both; }
+.pill { font-size:12px; color:var(--text2); border:1px solid var(--border2); padding:6px 14px; letter-spacing:0.04em; }
+
+/* SIGNUP FORM */
+.signup-box { width:100%; max-width:480px; animation:fadeUp 0.6s ease 0.4s both; }
+.signup-label { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--text3); margin-bottom:12px; }
+
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
+.field-full { margin-bottom:8px; }
+
+.signup-input { width:100%; background:var(--panel); border:1px solid var(--border2); color:var(--text); font-family:'Outfit',sans-serif; font-size:14px; font-weight:300; padding:14px 16px; outline:none; transition:border-color 0.2s; -webkit-appearance:none; border-radius:0; }
+.signup-input:focus { border-color:var(--accent); }
+.signup-input::placeholder { color:var(--text3); }
+
+.signup-btn { width:100%; background:var(--accent); border:none; color:#fff; font-family:'Outfit',sans-serif; font-size:14px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:18px 32px; cursor:pointer; transition:all 0.2s; margin-top:4px; }
+.signup-btn:hover { background:var(--accent2); transform:translateY(-1px); }
+
+.signup-note { font-size:11px; color:var(--text3); margin-top:10px; line-height:1.6; }
+
+/* SUCCESS */
+.success-box { display:none; background:var(--panel); border:1px solid var(--accent-border); padding:32px 28px; text-align:center; max-width:480px; width:100%; }
+.success-box.show { display:block; animation:fadeUp 0.5s ease forwards; }
+.success-icon { font-size:36px; margin-bottom:12px; }
+.success-title { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; margin-bottom:8px; }
+.success-desc { font-size:13px; color:var(--text2); line-height:1.65; margin-bottom:20px; }
+.success-next { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); }
+
+/* PROOF STRIP */
+.proof-strip { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.proof-item { padding:32px 24px; text-align:center; border-right:1px solid var(--border); }
+.proof-item:last-child { border-right:none; }
+.proof-val { font-family:'Playfair Display',serif; font-size:36px; font-weight:900; color:var(--accent); line-height:1; margin-bottom:6px; letter-spacing:-0.02em; }
+.proof-label { font-size:12px; color:var(--text2); line-height:1.4; }
+
+/* WHAT'S INSIDE */
+.inside-section { padding:72px 24px; max-width:760px; margin:0 auto; }
+.section-title { font-family:'Playfair Display',serif; font-size:clamp(28px,5vw,42px); font-weight:900; text-align:center; letter-spacing:-0.02em; margin-bottom:8px; }
+.section-title em { font-style:italic; color:var(--accent); }
+.section-sub { font-size:14px; color:var(--text2); text-align:center; margin-bottom:44px; line-height:1.6; }
+
+.inside-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--border); border:1px solid var(--border); }
+.inside-card { background:var(--panel); padding:28px; transition:background 0.15s; }
+.inside-card:hover { background:var(--panel2); }
+.inside-icon { font-size:24px; margin-bottom:12px; }
+.inside-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:8px; line-height:1.3; }
+.inside-body { font-size:13px; color:var(--text2); line-height:1.65; }
+
+/* NOT FOR */
+.notfor-section { padding:0 24px 72px; max-width:760px; margin:0 auto; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border); }
+.col-block { background:var(--panel); padding:28px; }
+.col-head { font-size:10px; letter-spacing:0.18em; text-transform:uppercase; padding-bottom:14px; margin-bottom:14px; border-bottom:1px solid var(--border); }
+.col-head.red { color:var(--accent); }
+.col-head.green { color:#3a9a6e; }
+.col-item { display:flex; gap:10px; font-size:13px; color:var(--text2); margin-bottom:10px; line-height:1.4; }
+.col-item::before { flex-shrink:0; font-size:11px; padding-top:1px; }
+.col-block:first-child .col-item::before { content:'✕'; color:var(--accent); }
+.col-block:last-child .col-item::before { content:'✓'; color:#3a9a6e; }
+
+/* ANGELA STRIP */
+.angela-strip { border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:52px 24px; max-width:760px; margin:0 auto; display:flex; gap:32px; align-items:center; }
+.angela-photo { width:80px; height:80px; border-radius:50%; flex-shrink:0; object-fit:cover; border:2px solid var(--accent-border); }
+.angela-photo-placeholder { width:80px; height:80px; border-radius:50%; flex-shrink:0; background:var(--panel); border:2px solid var(--accent-border); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--accent); }
+.angela-quote { font-family:'Playfair Display',serif; font-style:italic; font-size:17px; color:var(--text); line-height:1.5; margin-bottom:10px; }
+.angela-name { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text3); }
+
+/* FINAL CTA */
+.final-section { padding:72px 24px; text-align:center; background:var(--panel); border-top:1px solid var(--border); }
+.final-title { font-family:'Playfair Display',serif; font-size:clamp(26px,5vw,42px); font-weight:900; letter-spacing:-0.02em; margin-bottom:8px; line-height:1.1; }
+.final-title em { font-style:italic; color:var(--accent); }
+.final-sub { font-size:14px; color:var(--text2); margin-bottom:32px; }
+.final-btn { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; padding:18px 48px; font-size:14px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; transition:all 0.2s; cursor:pointer; border:none; font-family:'Outfit',sans-serif; }
+.final-btn:hover { background:var(--accent2); transform:translateY(-2px); }
+.final-note { font-size:12px; color:var(--text3); margin-top:12px; }
+
+/* FOOTER */
+footer { padding:28px 24px; text-align:center; border-top:1px solid var(--border); }
+.footer-brands { display:flex; justify-content:center; gap:20px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
+.footer-brand { font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text3); font-weight:600; }
+.footer-brand span { color:var(--accent); }
+.footer-sep { width:1px; height:14px; background:var(--border2); }
+.footer-copy { font-size:11px; color:var(--text3); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+
+@media (max-width:600px) {
+  .field-row { grid-template-columns:1fr; }
+  .inside-grid { grid-template-columns:1fr; }
+  .two-col { grid-template-columns:1fr; }
+  .proof-strip { grid-template-columns:1fr; }
+  .proof-item { border-right:none; border-bottom:1px solid var(--border); }
+  .proof-item:last-child { border-bottom:none; }
+  .angela-strip { flex-direction:column; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+    <button class="lang-btn" onclick="setLang('pt')" id="btn-pt">PT</button>
+    <button class="lang-btn" onclick="setLang('es')" id="btn-es">ES</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    <span class="en-el">Now Open · Free to Join</span>
+    <span class="pt-el">Agora Aberto · Gratuito</span>
+    <span class="es-el">Ahora Abierto · Gratis</span>
+  </div>
+
+  <h1 class="hero-title">
+    <span class="en-el">The <em>SME Growth</em><br>Lab</span>
+    <span class="pt-el">O <em>SME Growth</em><br>Lab</span>
+    <span class="es-el">El <em>SME Growth</em><br>Lab</span>
+  </h1>
+
+  <p class="hero-sub en-el">A free community for SME owners who are done with generic advice — and ready to build real systems that generate real revenue.</p>
+  <p class="hero-sub pt-el">Uma comunidade gratuita para proprietários de PMEs que estão fartos de conselhos genéricos — e prontos para construir sistemas reais que geram receita real.</p>
+  <p class="hero-sub es-el">Una comunidad gratuita para propietarios de PYMEs que están hartos de consejos genéricos — y listos para construir sistemas reales que generan ingresos reales.</p>
+
+  <div class="pills">
+    <div class="pill"><span class="en-el">Weekly Challenges</span><span class="pt-el">Desafios Semanais</span><span class="es-el">Retos Semanales</span></div>
+    <div class="pill"><span class="en-el">Live Hot Seats</span><span class="pt-el">Hot Seats ao Vivo</span><span class="es-el">Hot Seats en Directo</span></div>
+    <div class="pill"><span class="en-el">Sales Frameworks</span><span class="pt-el">Frameworks de Vendas</span><span class="es-el">Marcos de Ventas</span></div>
+    <div class="pill"><span class="en-el">Peer Founders</span><span class="pt-el">Fundadores Pares</span><span class="es-el">Fundadores Pares</span></div>
+    <div class="pill"><span class="en-el">Free Forever</span><span class="pt-el">Sempre Gratuito</span><span class="es-el">Gratis para Siempre</span></div>
+  </div>
+
+  <!-- SIGNUP FORM -->
+  <div class="signup-box" id="signupBox">
+    <div class="signup-label">
+      <span class="en-el">Join the Lab — it's free</span>
+      <span class="pt-el">Junte-se ao Lab — é gratuito</span>
+      <span class="es-el">Únete al Lab — es gratis</span>
+    </div>
+    <div class="field-row">
+      <input type="text" class="signup-input" id="s-name" placeholder="Your name" autocomplete="name">
+      <input type="text" class="signup-input" id="s-company" placeholder="Company name" autocomplete="organization">
+    </div>
+    <div class="field-full">
+      <input type="email" class="signup-input" id="s-email" placeholder="Email address" autocomplete="email">
+    </div>
+    <div class="field-full">
+      <input type="tel" class="signup-input" id="s-whatsapp" placeholder="WhatsApp number (optional)" autocomplete="tel">
+    </div>
+    <button class="signup-btn" onclick="joinLab()">
+      <span class="en-el">Join the Lab Free →</span>
+      <span class="pt-el">Entrar no Lab Gratuitamente →</span>
+      <span class="es-el">Unirme al Lab Gratis →</span>
+    </button>
+    <div class="signup-note en-el">Free. No spam. No obligation. You'll receive a welcome message within 24 hours.</div>
+    <div class="signup-note pt-el">Gratuito. Sem spam. Sem compromisso. Receberá uma mensagem de boas-vindas em 24 horas.</div>
+    <div class="signup-note es-el">Gratis. Sin spam. Sin compromiso. Recibirás un mensaje de bienvenida en 24 horas.</div>
+  </div>
+
+  <!-- SUCCESS STATE -->
+  <div class="success-box" id="successBox">
+    <div class="success-icon">⚗️</div>
+    <div class="success-title en-el">You're in. Welcome to the Lab.</div>
+    <div class="success-title pt-el">Está dentro. Bem-vindo ao Lab.</div>
+    <div class="success-title es-el">Ya estás dentro. Bienvenido al Lab.</div>
+    <div class="success-desc en-el">Angela will send you a personal welcome message within 24 hours with next steps and your first challenge.</div>
+    <div class="success-desc pt-el">Angela enviará uma mensagem de boas-vindas pessoal em 24 horas com os próximos passos e o seu primeiro desafio.</div>
+    <div class="success-desc es-el">Angela te enviará un mensaje de bienvenida personal en 24 horas con los próximos pasos y tu primer reto.</div>
+    <div class="success-next en-el">→ Watch for a WhatsApp or email from Angela</div>
+    <div class="success-next pt-el">→ Aguarde uma mensagem de Angela via WhatsApp ou email</div>
+    <div class="success-next es-el">→ Espera un mensaje de Angela por WhatsApp o email</div>
+  </div>
+
+</section>
+
+<!-- PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-item">
+    <div class="proof-val">3x</div>
+    <div class="proof-label en-el">Weekly sessions — challenge, lesson, hot seat</div>
+    <div class="proof-label pt-el">Sessões semanais — desafio, lição, hot seat</div>
+    <div class="proof-label es-el">Sesiones semanales — reto, lección, hot seat</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-val">€0</div>
+    <div class="proof-label en-el">Cost to join. No catch. No credit card.</div>
+    <div class="proof-label pt-el">Custo para entrar. Sem truques. Sem cartão.</div>
+    <div class="proof-label es-el">Coste de entrada. Sin trampa. Sin tarjeta.</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-val">1</div>
+    <div class="proof-label en-el">Direct line to Angela — not a chatbot</div>
+    <div class="proof-label pt-el">Linha direta com Angela — não um chatbot</div>
+    <div class="proof-label es-el">Línea directa con Angela — no un chatbot</div>
+  </div>
+</div>
+
+<!-- WHAT'S INSIDE -->
+<div class="inside-section">
+  <h2 class="section-title">
+    <span class="en-el">What happens <em>inside</em> the Lab</span>
+    <span class="pt-el">O que acontece <em>dentro</em> do Lab</span>
+    <span class="es-el">Qué ocurre <em>dentro</em> del Lab</span>
+  </h2>
+  <p class="section-sub en-el">Every week has structure. Every session has a purpose. This is not a passive community.</p>
+  <p class="section-sub pt-el">Cada semana tem estrutura. Cada sessão tem um propósito. Esta não é uma comunidade passiva.</p>
+  <p class="section-sub es-el">Cada semana tiene estructura. Cada sesión tiene un propósito. Esta no es una comunidad pasiva.</p>
+
+  <div class="inside-grid">
+    <div class="inside-card">
+      <div class="inside-icon">📅</div>
+      <div class="inside-title en-el">Monday — Weekly Challenge</div>
+      <div class="inside-title pt-el">Segunda — Desafio Semanal</div>
+      <div class="inside-title es-el">Lunes — Reto Semanal</div>
+      <div class="inside-body en-el">One focused task tied directly to a revenue system. Takes 20–30 minutes. Members report back by Friday. Creates accountability that actually moves your business forward.</div>
+      <div class="inside-body pt-el">Uma tarefa focada ligada diretamente a um sistema de receita. Leva 20 a 30 minutos. Os membros reportam até sexta-feira. Cria responsabilidade que realmente faz o seu negócio avançar.</div>
+      <div class="inside-body es-el">Una tarea enfocada vinculada directamente a un sistema de ingresos. Lleva 20-30 minutos. Los miembros reportan el viernes. Crea responsabilidad que realmente hace avanzar tu negocio.</div>
+    </div>
+    <div class="inside-card">
+      <div class="inside-icon">🎓</div>
+      <div class="inside-title en-el">Wednesday — Lesson Drop</div>
+      <div class="inside-title pt-el">Quarta — Lição da Semana</div>
+      <div class="inside-title es-el">Miércoles — Lección Semanal</div>
+      <div class="inside-body en-el">A short, dense lesson — never longer than 10 minutes. Always specific, always actionable. Sales systems, CRM setup, reactivation tactics, offer structure. No filler. No theory.</div>
+      <div class="inside-body pt-el">Uma lição curta e densa — nunca mais de 10 minutos. Sempre específica, sempre acionável. Sistemas de vendas, CRM, táticas de reativação, estrutura de oferta. Sem rodeios. Sem teoria.</div>
+      <div class="inside-body es-el">Una lección corta y densa — nunca más de 10 minutos. Siempre específica, siempre accionable. Sistemas de ventas, CRM, tácticas de reactivación, estructura de oferta. Sin relleno. Sin teoría.</div>
+    </div>
+    <div class="inside-card">
+      <div class="inside-icon">🎙️</div>
+      <div class="inside-title en-el">Friday — Live Hot Seat</div>
+      <div class="inside-title pt-el">Sexta — Hot Seat ao Vivo</div>
+      <div class="inside-title es-el">Viernes — Hot Seat en Directo</div>
+      <div class="inside-body en-el">One member's business gets diagnosed live by Angela. Everyone watching learns. The volunteer gets a real revenue audit in public. This is the most valuable session of the week.</div>
+      <div class="inside-body pt-el">O negócio de um membro é diagnosticado ao vivo por Angela. Todos os que assistem aprendem. O voluntário recebe uma auditoria de receita real em público. Esta é a sessão mais valiosa da semana.</div>
+      <div class="inside-body es-el">El negocio de un miembro es diagnosticado en directo por Angela. Todos los que asisten aprenden. El voluntario recibe una auditoría de ingresos real en público. Esta es la sesión más valiosa de la semana.</div>
+    </div>
+    <div class="inside-card">
+      <div class="inside-icon">⚙️</div>
+      <div class="inside-title en-el">Always — Resource Library</div>
+      <div class="inside-title pt-el">Sempre — Biblioteca de Recursos</div>
+      <div class="inside-title es-el">Siempre — Biblioteca de Recursos</div>
+      <div class="inside-body en-el">Templates, scripts, CRM setups, reactivation sequences, and sales frameworks. Built from real campaigns and real results. Updated as new systems are tested and proven.</div>
+      <div class="inside-body pt-el">Modelos, scripts, configurações de CRM, sequências de reativação e frameworks de vendas. Construídos a partir de campanhas e resultados reais. Atualizados à medida que novos sistemas são testados.</div>
+      <div class="inside-body es-el">Plantillas, scripts, configuraciones de CRM, secuencias de reactivación y marcos de ventas. Construidos a partir de campañas y resultados reales. Actualizados a medida que se prueban nuevos sistemas.</div>
+    </div>
+  </div>
+</div>
+
+<!-- THIS IS FOR YOU / NOT FOR YOU -->
+<div class="notfor-section">
+  <div class="two-col">
+    <div class="col-block">
+      <div class="col-head red en-el">This is NOT for you if…</div>
+      <div class="col-head red pt-el">Isto NÃO é para si se…</div>
+      <div class="col-head red es-el">Esto NO es para ti si…</div>
+      <div class="col-item en-el">You want motivation, not systems</div>
+      <div class="col-item pt-el">Quer motivação, não sistemas</div>
+      <div class="col-item es-el">Quieres motivación, no sistemas</div>
+      <div class="col-item en-el">You're not willing to do the weekly work</div>
+      <div class="col-item pt-el">Não está disposto a fazer o trabalho semanal</div>
+      <div class="col-item es-el">No estás dispuesto a hacer el trabajo semanal</div>
+      <div class="col-item en-el">You just want to consume, not implement</div>
+      <div class="col-item pt-el">Só quer consumir, não implementar</div>
+      <div class="col-item es-el">Solo quieres consumir, no implementar</div>
+      <div class="col-item en-el">You believe more content = more clients</div>
+      <div class="col-item pt-el">Acredita que mais conteúdo = mais clientes</div>
+      <div class="col-item es-el">Crees que más contenido = más clientes</div>
+    </div>
+    <div class="col-block">
+      <div class="col-head green en-el">This IS for you if…</div>
+      <div class="col-head green pt-el">Isto É para si se…</div>
+      <div class="col-head green es-el">Esto SÍ es para ti si…</div>
+      <div class="col-item en-el">You're an SME owner doing €50k–€2M and feeling stuck</div>
+      <div class="col-item pt-el">É proprietário de PME com €50k–€2M e sente-se bloqueado</div>
+      <div class="col-item es-el">Eres propietario de PYME con €50k–€2M y te sientes estancado</div>
+      <div class="col-item en-el">You want a real sales system, not more tips</div>
+      <div class="col-item pt-el">Quer um sistema de vendas real, não mais dicas</div>
+      <div class="col-item es-el">Quieres un sistema de ventas real, no más consejos</div>
+      <div class="col-item en-el">You're ready to act on what you learn</div>
+      <div class="col-item pt-el">Está pronto para agir com o que aprende</div>
+      <div class="col-item es-el">Estás listo para actuar con lo que aprendes</div>
+      <div class="col-item en-el">You want peer accountability and direct access to Angela</div>
+      <div class="col-item pt-el">Quer responsabilidade entre pares e acesso direto a Angela</div>
+      <div class="col-item es-el">Quieres responsabilidad entre pares y acceso directo a Angela</div>
+    </div>
+  </div>
+</div>
+
+<!-- ANGELA STRIP -->
+<div class="angela-strip">
+  <div class="angela-photo-placeholder">AE</div>
+  <div>
+    <div class="angela-quote en-el">"I built the Lab because most SME owners are working incredibly hard on the wrong things. The systems that fix this aren't complicated — they're just not taught anywhere."</div>
+    <div class="angela-quote pt-el">"Criei o Lab porque a maioria dos proprietários de PMEs trabalha incrivelmente na direção errada. Os sistemas que corrigem isso não são complicados — simplesmente não são ensinados em lado nenhum."</div>
+    <div class="angela-quote es-el">"Creé el Lab porque la mayoría de los propietarios de PYMEs trabajan increíblemente duro en las cosas equivocadas. Los sistemas que lo solucionan no son complicados — simplemente no se enseñan en ningún lugar."</div>
+    <div class="angela-name">Angela Esquivel — Founder, Eurozoom</div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="final-section">
+  <h2 class="final-title">
+    <span class="en-el">Stop consuming.<br>Start <em>building.</em></span>
+    <span class="pt-el">Pare de consumir.<br>Comece a <em>construir.</em></span>
+    <span class="es-el">Deja de consumir.<br>Empieza a <em>construir.</em></span>
+  </h2>
+  <p class="final-sub en-el">Join the SME Growth Lab. Free. No obligation. Start this week.</p>
+  <p class="final-sub pt-el">Junte-se ao SME Growth Lab. Gratuito. Sem compromisso. Comece esta semana.</p>
+  <p class="final-sub es-el">Únete al SME Growth Lab. Gratis. Sin compromiso. Empieza esta semana.</p>
+  <button class="final-btn" onclick="document.getElementById('s-name').focus(); window.scrollTo({top:0,behavior:'smooth'})">
+    <span class="en-el">Join Free →</span>
+    <span class="pt-el">Entrar Gratuitamente →</span>
+    <span class="es-el">Unirme Gratis →</span>
+  </button>
+  <div class="final-note en-el">Takes 30 seconds. Angela reviews every application personally.</div>
+  <div class="final-note pt-el">Demora 30 segundos. Angela revê cada candidatura pessoalmente.</div>
+  <div class="final-note es-el">Tarda 30 segundos. Angela revisa cada solicitud personalmente.</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brands">
+    <div class="footer-brand">SME Growth <span>Lab</span></div>
+    <div class="footer-sep"></div>
+    <div class="footer-brand"><span>Euro</span>zoom</div>
+    <div class="footer-sep"></div>
+    <div class="footer-brand"><span>Canada</span>zoom</div>
+  </div>
+  <div class="footer-copy en-el">© 2025 Angela Esquivel · Built to convert, not impress.</div>
+  <div class="footer-copy pt-el">© 2025 Angela Esquivel · Construído para converter, não para impressionar.</div>
+  <div class="footer-copy es-el">© 2025 Angela Esquivel · Construido para convertir, no para impresionar.</div>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.body.classList.remove('pt-mode','es-mode');
+  ['btn-en','btn-pt','btn-es'].forEach(id => document.getElementById(id).classList.remove('active'));
+  if(lang==='pt'){ document.body.classList.add('pt-mode'); document.getElementById('btn-pt').classList.add('active'); }
+  else if(lang==='es'){ document.body.classList.add('es-mode'); document.getElementById('btn-es').classList.add('active'); }
+  else { document.getElementById('btn-en').classList.add('active'); }
+
+  // Update placeholders
+  const ph = { en:['Your name','Company name','Email address','WhatsApp number (optional)'], pt:['O seu nome','Nome da empresa','Endereço de email','Número WhatsApp (opcional)'], es:['Tu nombre','Nombre de empresa','Dirección de email','Número WhatsApp (opcional)'] };
+  const ids = ['s-name','s-company','s-email','s-whatsapp'];
+  ids.forEach((id,i) => { const el = document.getElementById(id); if(el) el.placeholder = ph[lang][i]; });
+}
+
+function joinLab() {
+  const name = document.getElementById('s-name').value.trim();
+  const email = document.getElementById('s-email').value.trim();
+  if(!name){ document.getElementById('s-name').focus(); return; }
+  if(!email||!email.includes('@')){ document.getElementById('s-email').focus(); return; }
+
+  // Hide form, show success
+  document.getElementById('signupBox').style.display = 'none';
+  document.getElementById('successBox').classList.add('show');
+
+  // Here you would integrate with your email tool (Beehiiv, Mailchimp, etc.)
+  // e.g. fetch('YOUR_BEEHIIV_ENDPOINT', { method:'POST', body: JSON.stringify({email, name}) })
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='none'; }
+  });
+}, {threshold:0.08});
+
+['.proof-strip','.inside-section','.notfor-section','.angela-strip','.final-section'].forEach(sel => {
+  const el = document.querySelector(sel);
+  if(el){ el.style.opacity='0'; el.style.transform='translateY(16px)'; el.style.transition='opacity 0.5s ease,transform 0.5s ease'; observer.observe(el); }
+});
+</script>
+</body>
+</html>
